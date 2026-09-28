@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portal CEEP - acompanhamento escolar de alunos">
+  <title>Portal CEEP | Acompanhamento Escolar</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">C</div>
+        <div>
+          <h1>Portal CEEP</h1>
+          <span>Acompanhamento Escolar</span>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <span class="status-dot"><i></i> Sistema online</span>
+        <button class="icon-btn" id="btnTema" title="Alternar tema" aria-label="Alternar tema">☾</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div>
+          <span class="eyebrow">PAINEL ESCOLAR</span>
+          <h2 id="tituloAluno">Olá, Aluno CEEP 👋</h2>
+          <p>Acompanhe seu desempenho acadêmico, frequência e observações.</p>
+        </div>
+        <div class="student-badge">
+          <div class="avatar" id="avatarAluno">AC</div>
+          <div>
+            <strong id="nomeMini">Aluno CEEP</strong>
+            <span id="turmaMini">3º Ano • Turma A</span>
+          </div>
+        </div>
+      </section>
+
+      <nav class="profile-tabs" aria-label="Perfis">
+        <button class="profile-btn active" data-profile="pais">Área dos pais/aluno</button>
+        <button class="profile-btn" data-profile="professor">Área do professor</button>
+      </nav>
+
+      <section id="visaoPais" class="view active-view">
+        <div class="stats-grid">
+          <article class="stat-card">
+            <div class="stat-icon blue">★</div>
+            <div><span>Média geral</span><strong id="mediaGeral">8,5</strong></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-icon green">✓</div>
+            <div><span>Frequência</span><strong id="frequencia">92%</strong></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-icon purple">↗</div>
+            <div><span>Disciplinas</span><strong id="qtdDisciplinas">5</strong></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-icon orange">!</div>
+            <div><span>Situação</span><strong class="situation" id="situacao">Regular</strong></div>
+          </article>
+        </div>
+
+        <div class="content-grid">
+          <article class="card chart-card wide">
+            <div class="card-header">
+              <div>
+                <h3>Desempenho por disciplina</h3>
+                <p>Notas do período atual</p>
+              </div>
+              <span class="badge">Notas</span>
+            </div>
+            <div class="chart-box"><canvas id="graficoColunas"></canvas></div>
+          </article>
+
+          <article class="card chart-card">
+            <div class="card-header">
+              <div>
+                <h3>Frequência</h3>
+                <p>Presença no período</p>
+              </div>
+            </div>
+            <div class="chart-box doughnut-box"><canvas id="graficoPizza"></canvas></div>
+            <div class="legend-row">
+              <span><i class="legend-dot present"></i> Presente <b id="presencas">92%</b></span>
+              <span><i class="legend-dot absent"></i> Ausente <b id="faltas">8%</b></span>
+            </div>
+          </article>
+
+          <article class="card wide">
+            <div class="card-header">
+              <div>
+                <h3>Boletim</h3>
+                <p>Resumo das disciplinas</p>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr><th>Disciplina</th><th>Nota</th><th>Status</th><th>Professor</th></tr>
+                </thead>
+                <tbody id="tabelaNotas"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <div><h3>Observação pedagógica</h3><p>Mensagem do professor</p></div>
+            </div>
+            <div class="observation" id="observacao">Aluno inteligente, participativo e com bom desenvolvimento. Continue mantendo a rotina de estudos.</div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <div><h3>Informações</h3><p>Dados acadêmicos</p></div>
+            </div>
+            <ul class="info-list">
+              <li><span>Matrícula</span><strong id="matricula">20260001</strong></li>
+              <li><span>Turma</span><strong id="turma">3º Ano • A</strong></li>
+              <li><span>Período</span><strong>2026.2</strong></li>
+              <li><span>Última atualização</span><strong id="ultimaAtualizacao">Hoje</strong></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="visaoProfessor" class="view">
+        <div class="teacher-header">
+          <div>
+            <span class="eyebrow">GESTÃO ACADÊMICA</span>
+            <h2>Área do professor</h2>
+            <p>Atualize os dados do aluno e acompanhe o desempenho.</p>
+          </div>
+          <button class="btn-secondary" id="btnRestaurar">Restaurar dados</button>
+        </div>
+
+        <div class="content-grid">
+          <article class="card wide">
+            <div class="card-header"><div><h3>Dados do aluno</h3><p>Informações principais</p></div></div>
+            <div class="form-grid">
+              <label>Nome completo<input id="inputNome" type="text"></label>
+              <label>Matrícula<input id="inputMatricula" type="text"></label>
+              <label>Turma<input id="inputTurma" type="text"></label>
+              <label>Frequência (%)<input id="inputFrequencia" type="number" min="0" max="100"></label>
+            </div>
+          </article>
+
+          <article class="card wide">
+            <div class="card-header"><div><h3>Notas</h3><p>Digite valores entre 0 e 10</p></div></div>
+            <div class="grade-editor" id="gradeEditor"></div>
+          </article>
+
+          <article class="card wide">
+            <div class="card-header"><div><h3>Observação pedagógica</h3><p>Registre uma observação para a família</p></div></div>
+            <textarea id="inputObservacao" rows="5"></textarea>
+            <button class="btn-primary" id="btnSalvar">Salvar e atualizar painel</button>
+            <span class="save-message" id="saveMessage"></span>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Portal CEEP • Projeto acadêmico</span>
+      <span>© <span id="anoAtual"></span></span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
